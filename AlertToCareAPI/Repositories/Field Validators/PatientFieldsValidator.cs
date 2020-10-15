@@ -26,22 +26,9 @@ namespace AlertToCareAPI.Repositories.Field_Validators
 
         }
 
-        public void ValidateOldPatientId(string patientId, List<Patient> patients)
-        {
-            foreach (var patient in patients)
-            {
-                if (patient.PatientId == patientId)
-                {
-                    return;
-                }
-            }
-            throw new Exception("Invalid Patient Id");
-        }
-
         public void ValidateNewPatientId(string patientId, Patient patientRecord, List<Patient> patients)
         {
             CheckIcuPresence(patientRecord.IcuId);
-            CheckBedStatus(patientRecord.BedId);
             foreach (var patient in patients)
             {
                 if (patient.PatientId == patientId)
@@ -94,21 +81,5 @@ namespace AlertToCareAPI.Repositories.Field_Validators
             throw new Exception("Invalid data field");
         }
 
-        private static void CheckBedStatus(string bedId)
-        {
-            var database = new DatabaseManager();
-            var beds = database.ReadBedsDatabase();
-            foreach (var bed in beds)
-            {
-                if (bed.BedId == bedId)
-                {
-                    if (bed.Status == false)
-                    {
-                        return;
-                    }
-                }
-            }
-            throw new Exception("Invalid data field");
-        }
     }
 }

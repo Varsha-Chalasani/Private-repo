@@ -9,7 +9,8 @@ namespace AlertToCareAPI.Database
     {
         private readonly List<Patient> _patients=new List<Patient>();
         private readonly List<Icu> _icuList= new List<Icu>();
-        private readonly List<Bed> _beds = new List<Bed>();
+        private readonly List<Bed> _beds1 = new List<Bed>();
+        private readonly List<Bed> _beds2 = new List<Bed>();
         public DatabaseManager()
         {
 
@@ -35,7 +36,7 @@ namespace AlertToCareAPI.Database
                 {
                     PatientId = "PID001",
                     Spo2 = 100,
-                    Bpm = 70,
+                    Bpm = 60,
                     RespRate = 120
                 }
             };
@@ -88,103 +89,123 @@ namespace AlertToCareAPI.Database
                 {
                     PatientId = "PID003",
                     Spo2 = 120,
-                    Bpm = 100,
+                    Bpm = 190,
                     RespRate = 90
                 }
             };
             _patients.Add(patient3);
-            var icu = new Icu()
-            {
-                IcuId = "ICU01",
-                LayoutId = "LID02",
-                BedsCount = 7,
-                Patients = _patients
-            };
 
-            _icuList.Add(icu);
-            
-            _beds.Add(new Bed()
+            _beds1.Add(new Bed()
             {
                 BedId = "BID1",
                 Status = true,
                 IcuId = "ICU01"
             });
-            _beds.Add(new Bed()
+            _beds1.Add(new Bed()
             {
                 BedId = "BID2",
                 Status = true,
                 IcuId = "ICU01"
             });
-            _beds.Add(new Bed()
+            _beds1.Add(new Bed()
             {
                 BedId = "BID3",
                 Status = true,
                 IcuId = "ICU01"
             });
-            _beds.Add(new Bed()
+            _beds1.Add(new Bed()
             {
                 BedId = "BID4",
                 Status = false,
                 IcuId = "ICU01"
             });
-            _beds.Add(new Bed()
+            _beds1.Add(new Bed()
             {
                 BedId = "BID5",
                 Status = false,
                 IcuId = "ICU01"
             });
-            _beds.Add(new Bed()
+            _beds1.Add(new Bed()
             {
                 BedId = "BID6",
                 Status = false,
                 IcuId = "ICU01"
             });
-            _beds.Add(new Bed()
+            _beds1.Add(new Bed()
             {
                 BedId = "BID7",
                 Status = false,
                 IcuId = "ICU01"
             });
+            var icu = new Icu()
+            {
+                IcuId = "ICU01",
+                LayoutId = "LID02",
+                BedsCount = 7,
+                Beds = _beds1
+            };
+
+            _icuList.Add(icu);
+
+            _beds2.Add(new Bed()
+            {
+                BedId = "BID50",
+                Status = false,
+                IcuId = "ICU03"
+            });
+            _beds2.Add(new Bed()
+            {
+                BedId = "BID51",
+                Status = false,
+                IcuId = "ICU03"
+            });
+            _beds2.Add(new Bed()
+            {
+                BedId = "BID52",
+                Status = false,
+                IcuId = "ICU03"
+            });
+
+            _icuList.Add(new Icu()
+            {
+                IcuId =  "ICU03",
+                LayoutId = "LID03",
+                BedsCount = 3,
+                Beds = _beds2
+            });
             
             WriteToPatientsDatabase(_patients);
             WriteToIcuDatabase(_icuList);
-            WriteToBedsDatabase(_beds);
         }
 
         public void WriteToPatientsDatabase(List<Patient> patients)
         {
-            var writer = new StreamWriter("Patients.json");
+            var fs = new FileStream("Patients.json", FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+            var writer = new StreamWriter(fs);
             foreach (var patient in patients)
             {
                 writer.WriteLine(JsonConvert.SerializeObject(patient));
             }
-            writer.Close();
+            writer.Dispose();
         }
 
         public void WriteToIcuDatabase(List<Icu> icuList)
         {
-            var writer = new StreamWriter("Icu.json");
+            var fs = new FileStream("Icu.json", FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+            var writer = new StreamWriter(fs);
             foreach (var icu in icuList)
             {
                 writer.WriteLine(JsonConvert.SerializeObject(icu));
             }
-            writer.Close();
+            writer.Dispose();
         }
-        public void WriteToBedsDatabase(List<Bed> beds)
-        {
-            var writer = new StreamWriter("Beds.json");
-            foreach (var bed in beds)
-            {
-                writer.WriteLine(JsonConvert.SerializeObject(bed));
-            }
-            writer.Close();
-        }
-        
+
 
         public List<Icu> ReadIcuDatabase()
         {
             var icuList = new List<Icu>();
-            var reader = new StreamReader("Icu.json");
+            var fs = new FileStream("Icu.json", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            var reader = new StreamReader(fs);
             while (reader.EndOfStream != true)
             {
                 var line = reader.ReadLine();
@@ -192,13 +213,14 @@ namespace AlertToCareAPI.Database
                 icuList.Add(icu);
             }
 
-            reader.Close();
+            reader.Dispose();
             return icuList;
         }
         public List<Patient> ReadPatientDatabase()
         {
             var patients = new List<Patient>();
-            var reader = new StreamReader("Patients.json");
+            var fs = new FileStream("Patients.json", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            var reader = new StreamReader(fs);
             while (reader.EndOfStream != true)
             {
                 var line = reader.ReadLine();
@@ -206,41 +228,32 @@ namespace AlertToCareAPI.Database
                 patients.Add(patient);
             }
             
-            reader.Close();
+            reader.Dispose();
             return patients;
         }
 
         public List<Vitals> ReadVitalsDatabase()
         {
-            var reader = new StreamReader("Patients.json");
-            var patients = new List<Patient>();
-            while (reader.EndOfStream != true)
-            {
-                var line = reader.ReadLine();
-                var patient = JsonConvert.DeserializeObject<Patient>(line);
-                patients.Add(patient);
-            }
+            var patients = ReadPatientDatabase();
             var vitals = new List<Vitals>();
             foreach(var patient in patients)
             {
                 vitals.Add(patient.Vitals);
             }
-            reader.Close(); 
             return vitals;
         }
 
         public List<Bed> ReadBedsDatabase()
         {
+            var icuList = ReadIcuDatabase();
             var beds = new List<Bed>();
-            var reader = new StreamReader("Beds.json");
-            while (reader.EndOfStream != true)
+            foreach (var icu in icuList)
             {
-                var line = reader.ReadLine();
-                var bed = JsonConvert.DeserializeObject<Bed>(line);
-                beds.Add(bed);
+                foreach (var bed in icu.Beds)
+                {
+                    beds.Add(bed);
+                }
             }
-
-            reader.Close();
             return beds;
         }
     }

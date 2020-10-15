@@ -43,6 +43,7 @@ namespace AlertToCareAPI.Controllers
             try
             {
                 _configurationRepository.AddIcu(icu);
+                
                 return Ok();
             }
             catch
