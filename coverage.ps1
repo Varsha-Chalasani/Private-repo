@@ -36,7 +36,7 @@ Write-Host ""
        }
     }
 
-if($result -eq 1){
+if($result -eq 0){
     Write-Host "Coverage Check: failed" -ForegroundColor red 
 }
 else{
