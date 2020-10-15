@@ -3,9 +3,13 @@ name: Resharper Code Analysis
 on: 
     push:
         branches: [master]
+paths:
+    exclude:
+    -$(Private-repo).Api.Tests/*
 jobs:
   resharper:
     runs-on: windows-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
