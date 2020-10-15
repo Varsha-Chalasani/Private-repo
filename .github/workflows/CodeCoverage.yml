@@ -20,6 +20,3 @@ jobs:
 
       - name: Check Coverage
         run: powershell ./coverage.ps1 -linerate 1
-
-      - name: Html report
-        run: inspectcode -o="report2.html" -f="html" sol path 

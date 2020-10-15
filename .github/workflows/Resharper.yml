@@ -3,7 +3,8 @@ name: Resharper Code Analysis
 on: 
     push:
         branches: [master]
- 
+ exclude patterns:
+ -"Api.Tests/"
 jobs:
   resharper:
     runs-on: windows-latest
