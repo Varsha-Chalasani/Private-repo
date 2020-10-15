@@ -1,12 +1,14 @@
 {
   "ExpandedNodes": [
     "",
+    "\\.github",
+    "\\.github\\workflows",
     "\\AlertToCareAPI",
     "\\AlertToCareAPI\\Controllers",
     "\\AlertToCareAPI\\Models",
     "\\AlertToCareAPI\\Repositories",
     "\\AlertToCareAPI\\Repositories\\Field Validators"
   ],
-  "SelectedNode": "\\packages",
+  "SelectedNode": "\\resharper.ps1",
   "PreviewInSolutionExplorer": false
 }
