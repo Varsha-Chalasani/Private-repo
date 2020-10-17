@@ -37,7 +37,7 @@ if($issuetypes.count -eq 0){
 }
 else{
     Write-Host "Number of Inspection Violations:" $issuetypes.count -ForegroundColor red
-    $result = 0
+    $result = 1
 }
 
 
