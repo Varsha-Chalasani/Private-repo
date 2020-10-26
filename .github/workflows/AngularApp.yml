@@ -16,7 +16,9 @@ jobs:
         with:
           node-version: '12.x'
       - name: Install dependencies
-        run: cd AssistPurchaseUI and npm install
+        run: |
+            cd AssistPurchaseUI 
+            npm install
       - name: Build
         run: npm --prefix AssistPurchaseUI run build:ci
       - name: Test
