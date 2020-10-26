@@ -1,23 +1,22 @@
-using AssistPurchase.Models;
 using System.Collections.Generic;
 
 namespace AssistPurchase.Repositories.Abstractions
 {
     public interface IFiltersRepository
     {
-        public IEnumerable<Product> GetByCompactFilter(bool filterValue);
-        public IEnumerable<Product> GetAll();
-        public Product GetProduct(string productId);
-        public IEnumerable<Product> GetByProductSpecificTrainingFilter(bool filterValue);
-        public List<Product> GetByPriceFilter(string amount, string belowOrAbove);
-        public IEnumerable<Product> GetBySoftwareUpdateSupportFilter(bool filterValue);
-        public IEnumerable<Product> GetByPortabilityFilter(bool filterValue);
-        public IEnumerable<Product> GetByBatterySupportFilter(bool filterValue);
-        public IEnumerable<Product> GetByThirdPartyDeviceSupportFilter(bool filterValue);
-        public IEnumerable<Product> GetBySafeToFlyCertificationFilter(bool filterValue);
-        public IEnumerable<Product> GetByTouchScreenSupportFilter(bool filterValue);
-        public IEnumerable<Product> GetByMultiPatientSupportFilter(bool filterValue);
-        public IEnumerable<Product> GetByCyberSecurityFilter(bool filterValue);
+        public List<string> GetByCompactFilter(string filterValue);
+        public List<string> GetAll();
+        public string GetProduct(string productId);
+        public List<string> GetByProductSpecificTrainingFilter(string filterValue);
+        public List<string> GetByPriceFilter(string amount, string belowOrAbove);
+        public List<string> GetBySoftwareUpdateSupportFilter(string filterValue);
+        public List<string> GetByPortabilityFilter(string filterValue);
+        public List<string> GetByBatterySupportFilter(string filterValue);
+        public List<string> GetByThirdPartyDeviceSupportFilter(string filterValue);
+        public List<string> GetBySafeToFlyCertificationFilter(string filterValue);
+        public List<string> GetByTouchScreenSupportFilter(string filterValue);
+        public List<string> GetByMultiPatientSupportFilter(string filterValue);
+        public List<string> GetByCyberSecurityFilter(string filterValue);
 
     }
 }

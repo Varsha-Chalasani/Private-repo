@@ -1,49 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
 using AssistPurchase.Models;
-using AssistPurchase.Repositories.Implementations;
 
 namespace AssistPurchase.Repositories.FieldValidators
 {
     public class CustomerAlertFieldValidator
     {
         private readonly CommonFieldValidator _validator = new CommonFieldValidator();
-        private readonly ProductDbRepository _repo = new ProductDbRepository();
+     
         public void ValidateCustomerAlertFields(CustomerAlert alert)
         {
             _validator.IsWhitespaceOrEmptyOrNull(alert.ProductId);
             _validator.IsWhitespaceOrEmptyOrNull(alert.CustomerName);
             _validator.IsWhitespaceOrEmptyOrNull(alert.PhoneNumber);
             _validator.IsWhitespaceOrEmptyOrNull(alert.CustomerEmailId);
-            ValidateOldProductId(alert.ProductId);
+           
         }
 
-        private void ValidateOldProductId(string productId)
+       public void ValidateFilterValue(string filter)
         {
-            var products = _repo.GetAllProducts();
-            foreach (var product in products)
+            if (filter.ToLower() == "true" || filter.ToLower() == "false")
             {
-                if (product.ProductId == productId)
-                {
-                    return;
-                }
+                
             }
-
-            throw new Exception("Invalid data filed");
+            else
+            {
+                throw new Exception("Invalid data ");
+            }
         }
-
-        public void ValidateOldCustomerId(string customerId, IEnumerable<CustomerAlert> customers)
+        public void ValidAmount(string amount)
         {
-            
-            foreach (var customer in customers)
+            if(float.TryParse(amount, out float i) && i!=0)
             {
-                if (customer.CustomerId == customerId)
-                {
-                    return;
-                }
+                
             }
-
-            throw new Exception("Invalid data filed");
+            else
+            {
+                throw new Exception("Invalid amount type");
+            }
         }
     }
 }

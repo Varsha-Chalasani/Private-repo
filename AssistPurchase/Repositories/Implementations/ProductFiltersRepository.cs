@@ -1,204 +1,222 @@
-
-using AssistPurchase.Models;
 using System.Collections.Generic;
 using AssistPurchase.Repositories.Abstractions;
+using AssistPurchase.Repositories.FieldValidators;
 
 namespace AssistPurchase.Repositories.Implementations
 {
     public class ProductFiltersRepository : IFiltersRepository
     {
         private readonly ProductDbRepository _repo = new ProductDbRepository();
-       
-        public IEnumerable<Product> GetByCompactFilter(bool filterValue)
+        private readonly CustomerAlertFieldValidator _validator = new CustomerAlertFieldValidator();
+        public List<string> GetByCompactFilter(string filterValue)
         {
+            _validator.ValidateFilterValue(filterValue);
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.Compact == filterValue)
+                if (product.Compact.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        public IEnumerable<Product> GetAll()
-        {
-            return _repo.GetAllProducts();
-        }
-
-        public Product GetProduct(string productId)
-        {
-            return _repo.GetProductById(productId);
-        }
-
-        public IEnumerable<Product> GetByProductSpecificTrainingFilter(bool filterValue)
+        public List<string> GetAll()
         {
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.ProductSpecificTraining == filterValue)
+               prodList.Add(product.ProductName + " " + product.ProductId);
+            }
+
+            return prodList;
+        }
+
+        public string GetProduct(string productId)
+        {
+            var product =  _repo.GetProductById(productId);
+            return product.ProductName + " " + product.ProductId;
+        }
+
+        public List<string> GetByProductSpecificTrainingFilter(string filterValue)
+        {
+            _validator.ValidateFilterValue(filterValue);
+            var products = _repo.GetAllProducts();
+            var prodList = new List<string>();
+            foreach (var product in products)
+            {
+                if (product.ProductSpecificTraining.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        public List<Product> GetByPriceFilter(string amount, string belowOrAbove)
+        public List<string> GetByPriceFilter(string amount, string belowOrAbove)
         {
+            _validator.ValidAmount(amount);
             var prodList = belowOrAbove.ToLower() == "below" ? GetBelowRateProducts(amount) : GetAboveRateProducts(amount);
             return prodList;
         }
 
-        public IEnumerable<Product> GetBySoftwareUpdateSupportFilter(bool filterValue)
+        public List<string> GetBySoftwareUpdateSupportFilter(string filterValue)
         {
+            _validator.ValidateFilterValue(filterValue);
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.SoftwareUpdateSupport == filterValue)
+                if (product.SoftwareUpdateSupport.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        public IEnumerable<Product> GetByPortabilityFilter(bool filterValue)
+        public List<string> GetByPortabilityFilter(string filterValue)
         {
+            _validator.ValidateFilterValue(filterValue);
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.Portability == filterValue)
+                if (product.Portability.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        public IEnumerable<Product> GetByBatterySupportFilter(bool filterValue)
+        public List<string> GetByBatterySupportFilter(string filterValue)
         {
+            _validator.ValidateFilterValue(filterValue);
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.BatterySupport == filterValue)
+                if (product.BatterySupport.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        public IEnumerable<Product> GetByThirdPartyDeviceSupportFilter(bool filterValue)
+        public List<string> GetByThirdPartyDeviceSupportFilter(string filterValue)
         {
+            _validator.ValidateFilterValue(filterValue);
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.ThirdPartyDeviceSupport == filterValue)
+                if (product.ThirdPartyDeviceSupport.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        public IEnumerable<Product> GetBySafeToFlyCertificationFilter(bool filterValue)
+        public List<string> GetBySafeToFlyCertificationFilter(string filterValue)
         {
+            _validator.ValidateFilterValue(filterValue);
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.SafeToFlyCertification == filterValue)
+                if (product.SafeToFlyCertification.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        public IEnumerable<Product> GetByTouchScreenSupportFilter(bool filterValue)
+        public List<string> GetByTouchScreenSupportFilter(string filterValue)
         {
+            _validator.ValidateFilterValue(filterValue);
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.TouchScreenSupport == filterValue)
+                if (product.TouchScreenSupport.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        public IEnumerable<Product> GetByMultiPatientSupportFilter(bool filterValue)
+        public List<string> GetByMultiPatientSupportFilter(string filterValue)
         {
+            _validator.ValidateFilterValue(filterValue);
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.MultiPatientSupport == filterValue)
+                if (product.MultiPatientSupport.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        public IEnumerable<Product> GetByCyberSecurityFilter(bool filterValue)
+        public List<string> GetByCyberSecurityFilter(string filterValue)
         {
+            _validator.ValidateFilterValue(filterValue);
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (product.CyberSecurity == filterValue)
+                if (product.CyberSecurity.ToLower() == filterValue.ToLower())
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        private List<Product> GetBelowRateProducts(string amount)
+        private List<string> GetBelowRateProducts(string amount)
         {
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (int.Parse(amount) >= int.Parse(product.Price))
+                if (double.Parse(amount) >= double.Parse(product.Price))
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName + " " + product.ProductId);
                 }
             }
 
             return prodList;
         }
 
-        private List<Product> GetAboveRateProducts(string amount)
+        private List<string> GetAboveRateProducts(string amount)
         {
             var products = _repo.GetAllProducts();
-            var prodList = new List<Product>();
+            var prodList = new List<string>();
             foreach (var product in products)
             {
-                if (int.Parse(amount) <= int.Parse(product.Price))
+                if (double.Parse(amount) <= double.Parse(product.Price))
                 {
-                    prodList.Add(product);
+                    prodList.Add(product.ProductName+ " " +product.ProductId);
                 }
             }
 
