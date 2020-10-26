@@ -48,6 +48,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.0ab2c90548e7be7882bdbaca35d0c87e7e4e569a }}
           BRANCH: gh-pages
           FOLDER: deploy_dist/Private-repo
