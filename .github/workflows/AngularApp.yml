@@ -18,9 +18,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build
-        run: ng build --prod --sourceMap=false --base-href /Private-repo/AssistPurchaseUI
+        run: npm run build:ci
       - name: Test
-        run: ng test --watch=false --code-coverage --source-map true
+        run: npm run test:ci
       - name: Archive build
         if: success()
         uses: actions/upload-artifact@v1
