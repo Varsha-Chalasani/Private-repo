@@ -16,9 +16,9 @@ jobs:
         with:
           node-version: '12.x'
       - name: Install dependencies
-        run: npm install
+        run: npm --prefix AssistPurchaseUI install
       - name: Install Angular
-        run: npm install -g @angular/cli
+        run: npm --prefix AssistPurchaseUI install -g @angular/cli
       - name: Build
         run: npm --prefix AssistPurchaseUI run build:ci
       - name: Test
