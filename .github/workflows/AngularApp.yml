@@ -28,13 +28,13 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: deploy_dist
-          path: dist
+          path: AssistPurchaseUI/dist
       - name: Archive code coverage result
         if: success()
         uses: actions/upload-artifact@v1
         with:
           name: deploy_coverage
-          path: coverage
+          path: AssistPurchaseUI/coverage
   deploy:
     runs-on: windows-latest
     needs: build

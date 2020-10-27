@@ -2,12 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\.github",
+    "\\.github\\workflows",
     "\\AssistPurchase",
     "\\AssistPurchase.Test",
+    "\\AssistPurchaseUI",
     "\\AssistPurchase\\Controllers",
     "\\AssistPurchase\\Repositories",
     "\\AssistPurchase\\Repositories\\Implementations"
   ],
-  "SelectedNode": "\\AssistPurchase\\Controllers\\ProductsDatabaseController.cs",
+  "SelectedNode": "\\.github\\workflows\\AngularApp.yml",
   "PreviewInSolutionExplorer": false
 }
