@@ -50,4 +50,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.DEPLOYMENT }}
           BRANCH: gh-pages
-          FOLDER: deploy_dist/Private-repo
+          FOLDER: AssistPurchaseUI/deploy_dist/Private-repo
